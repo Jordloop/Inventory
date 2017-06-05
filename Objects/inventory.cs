@@ -16,6 +16,24 @@ namespace InventoryList
       _product = Product;
       _count = Count;
     }
+
+    //Alters how the 'Assert.Equal' method works in our InventoryTest file.
+    //argument must match method signature
+    public override bool Equals(System.Object otherInventory)
+    {
+      //filters only inventory type objects
+      if(!(otherInventory is Inventory))
+      {
+        return false;
+      }
+      //once both objects are determined to be of type inventory, compare their 'product' property and return TRUE or FALSE
+      else
+      {
+        Inventory newInventory = (Inventory) otherInventory;
+        bool sameProduct = (this.GetProduct() == newInventory.GetProduct());
+        return (sameProduct);
+      }
+    }
     public int GetId()
     {
       return _id;
@@ -35,6 +53,15 @@ namespace InventoryList
     public void SetProduct(string newProduct)
     {
       _product = newProduct;
+    }
+
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM inventory_database;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
     }
 
     public static List<Inventory> GetAll()
@@ -62,7 +89,7 @@ namespace InventoryList
         //  adds new Inventory object to allInventory list.
         allInventory.Add(newInventory);
       }
-      if (rdr != null) 
+      if (rdr != null)
       {
         rdr.Close();
       }
