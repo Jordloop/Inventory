@@ -40,6 +40,9 @@ namespace InventoryList
   }
   public static class DBConfiguration
   {
-    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=todo;Integrated Security=SSPI;";
+    //  DATA Source: identifies the server.
+    //  INITIAL CATALOG: database name.
+    //  INTEGRATED SECURITY: sets the security of the db access to the windows user that is currently logged in.
+    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_database;Integrated Security=SSPI;";
   }
 }
